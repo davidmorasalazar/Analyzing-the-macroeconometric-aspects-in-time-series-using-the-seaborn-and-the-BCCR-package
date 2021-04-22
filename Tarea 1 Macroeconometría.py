@@ -13,9 +13,9 @@ import requests
 import io
 #1.a
 # Download data from web page
-url="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
-s=requests.get(url).content
-a=pd.read_csv(io.StringIO(s.decode('utf-8')))
+urla="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
+s1=requests.get(urla).content
+a=pd.read_csv(io.StringIO(s1.decode('utf-8')))
 #1.b
 # Rename the columns of a: a.1
 #b = a.rename(columns = {0: 'Time'}, inplace = False)
@@ -30,21 +30,20 @@ a['Temp'].plot(ax=axes[0,1]); axes[0,1].set_title('Temp')
 a['Solar.R'].plot(ax=axes[1,0]); axes[1,0].set_title('Solar.R')
 a['Wind'].plot(ax=axes[1,1]); axes[1,1].set_title('Wind')
 #1.c.alternativa2
-sns.set_theme(style="ticks")
+# y = ["Ozone"]
+# x = ["Day"]
+# g = sns.FacetGrid(a, row='Ozone', col='Day')
+# g.map(sns.lmplot, "age")
+# plt.show()
+#1.d
 
-# Load the example dataset for Anscombe's quartet
-df = sns.load_dataset("anscombe")
+#2.a
+urlb="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/AirPassengers.csv"
+s2=requests.get(urlb).content
+b=pd.read_csv(io.StringIO(s2.decode('utf-8')))
+print(b)
+#2.b
+sns.histplot(b.value, kde=True)
+plt.show()
+#2.c
 
-# Show the results of a linear regression within each dataset
-sns.lmplot(x="Day", y="Ozone", col="Ozone", hue="Ozone", data=a,
-           col_wrap=2, ci=None, palette="muted", height=4,
-           scatter_kws={"s": 50, "alpha": 1})
-# sns.set_theme(style="darkgrid")
-
-# # Load an example dataset with long-form data
-# fmri = sns.load_dataset("a")
-
-# # Plot the responses for different events and regions
-# sns.lineplot(x="Day", y="Ozone",
-#              hue="region", style="event",
-#              data=a)
