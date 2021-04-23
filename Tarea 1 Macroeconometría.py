@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import requests
 import io
 import xlrd
+from bccr import SW
 #1.a
 # Download data from web page
 urla="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
@@ -57,7 +58,20 @@ plt.plot(x[290:318], y[290:318])
 plt.xticks(x[290:318], rotation='vertical', fontsize=5)
 plt.subplots_adjust(bottom=0.35)
 plt.show()
+#3.a.alternativa
+IPC = SW({979:'IPC Julio 2006 = 100'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
+IPC.plot();
 #3.b
+def figura(datos, titulo, y):
+    fig, ax = plt.subplots(figsize=(12,5))
+    ax = datos.plot(ax=ax, legend=None)
+    ax.set(title=titulo, xlabel=" ", ylabel=y)
+    return fig
+figura(IPC.diff(1),
+       'Cambio trimestral en el IPC de Costa Rica',
+       'Base J2006 = 100');
+IPC = SW({1043:'IPC (J2006=100) variación mensual'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
+IPC.plot(figsize = (12,5));
 
 #3.c
 
@@ -66,3 +80,5 @@ plt.show()
 #3.e
 
 #3.f
+
+#4.a
