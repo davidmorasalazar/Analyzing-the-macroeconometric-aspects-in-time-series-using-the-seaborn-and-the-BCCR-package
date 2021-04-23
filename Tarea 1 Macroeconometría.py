@@ -12,6 +12,7 @@ import requests
 import io
 import xlrd
 from bccr import SW
+#pip install bccr
 #1.a
 # Download data from web page
 urla="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
@@ -21,7 +22,6 @@ a=pd.read_csv(io.StringIO(s1.decode('utf-8')))
 #Rename the columns of a: a.1
 b = a.rename(columns = {0: 'Time'}, inplace = False)
 pd.options.display.max_rows = 20
-print(a)
 #1.c
 a.plot(subplots=True, figsize=(10, 10)); plt.legend(loc='best')
 #1.c.alternativa1
@@ -42,7 +42,6 @@ a['Wind'].plot(ax=axes[1,1]); axes[1,1].set_title('Wind')
 urlb="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/AirPassengers.csv"
 s2=requests.get(urlb).content
 b=pd.read_csv(io.StringIO(s2.decode('utf-8')))
-print(b)
 #2.b
 sns.lineplot(data=b, x="Unnamed: 0", y="value")
 #2.c
@@ -50,7 +49,6 @@ b['Natural logarithm of value'] = np.log(b['value'])
 sns.lineplot(data=b, x="Unnamed: 0", y="Natural logarithm of value")
 #3.a
 wb = xlrd.open_workbook('C:/Users/MiBebe/Downloads/IPC.xlsx')
-print(wb)
 sh1 = wb.sheet_by_name(u'Hoja1')
 x = sh1.col_values(0)  # column 0
 y = sh1.col_values(1)  # column 1
@@ -61,19 +59,35 @@ plt.show()
 #3.a.alternativa
 IPC = SW({979:'IPC Julio 2006 = 100'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
 IPC.plot();
-#3.b
+#3.a.alternativa2
 def figura(datos, titulo, y):
     fig, ax = plt.subplots(figsize=(12,5))
     ax = datos.plot(ax=ax, legend=None)
     ax.set(title=titulo, xlabel=" ", ylabel=y)
     return fig
+figura(IPC,"IPC", "Julio 2006 = 100")
+#3.b
 figura(IPC.diff(1),
        'Cambio trimestral en el IPC de Costa Rica',
        'Base J2006 = 100');
-IPC = SW({1043:'IPC (J2006=100) variación mensual'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
-IPC.plot(figsize = (12,5));
+#3.b.alternativa
+IPC1 = SW({1043:'IPC (J2006=100) variación mensual'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
+IPC1.plot(figsize = (12,5));
 
-#3.c
+#3.c.1
+transIPC1 = 100*IPC1.pct_change(1)
+translogIPC2 = 100*np.log(IPC).diff(1)
+x = IPC["fecha"]
+transIPC1.plot(figsize = (12,5));
+translogIPC2.plot(figsize = (12,5));
+
+
+
+series = {1365:'NPP', 1445:'M1'}
+dinero = SW(series)
+transIPC1.plot()
+translogIPC2.plot()
+
 
 #3.d
 
