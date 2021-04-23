@@ -77,11 +77,15 @@ IPC1.plot(figsize = (12,5));
 #3.c.1
 def figura1(datos, datos1, titulo, y):
     fig1, ax = plt.subplots(figsize=(12,10))
-    concatenar = pd.concat([datos, datos1])    
-    ax = sns.lineplot(data=concatenar)
-    ax.set(title=titulo, xlabel=" ", ylabel=y)
+    fig2, ax1 = plt.subplots(figsize=(12,10))
+    # concatenar = pd.concat([datos, datos1])    
+    # ax = sns.lineplot(data=concatenar)
+    ax = datos.plot(ax=ax, legend=None)
+    ax1 = datos1.plot(ax1=ax1, legend=None)  
+    ax.set(title=titulo, xlabel=" ", ylabel=y)    
+    ax1.set(title=titulo, xlabel=" ", ylabel=y)
 
-    return fig1
+    return
 figura1(100*IPC.pct_change(1), 100*np.log(IPC).diff(1)," Tasa de crecimiento y la primera diferencia del logaritmo del IPC", "Julio 2006 = 100")
 
 transIPC1 = 100*IPC.pct_change(1)
