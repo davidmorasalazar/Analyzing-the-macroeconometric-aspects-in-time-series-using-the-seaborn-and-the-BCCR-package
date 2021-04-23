@@ -8,9 +8,9 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from unicodedata import normalize
 import requests
 import io
+import xlrd
 #1.a
 # Download data from web page
 urla="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
@@ -48,8 +48,15 @@ sns.lineplot(data=b, x="Unnamed: 0", y="value")
 b['Natural logarithm of value'] = np.log(b['value'])
 sns.lineplot(data=b, x="Unnamed: 0", y="Natural logarithm of value")
 #3.a
-df = pd.read_csv(r'C:\Users\MiBebe\Desktop\Economía Universidad de Costa Rica\Macro Econometría\Tarea 1')
-print(df)
+wb = xlrd.open_workbook('C:/Users/MiBebe/Downloads/IPC.xlsx')
+print(wb)
+sh1 = wb.sheet_by_name(u'Hoja1')
+x = sh1.col_values(0)  # column 0
+y = sh1.col_values(1)  # column 1
+plt.plot(x[290:318], y[290:318])
+plt.xticks(x[290:318], rotation='vertical', fontsize=5)
+plt.subplots_adjust(bottom=0.35)
+plt.show()
 #3.b
 
 #3.c
@@ -59,5 +66,3 @@ print(df)
 #3.e
 
 #3.f
-
-#4.a
