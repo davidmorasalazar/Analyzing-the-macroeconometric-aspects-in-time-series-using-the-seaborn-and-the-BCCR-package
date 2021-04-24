@@ -89,9 +89,25 @@ translogIPC2 = 100*np.log(IPC).diff(1)
 transIPC1.plot(figsize = (12,5), title = "Tasa de crecimiento mensual del IPC");
 translogIPC2.plot(figsize = (12,5), title = "Primera diferencia del logaritmo del IPC");
 #3.d
-
+figura(IPC.diff(4),
+       'Cambio interanual en el IPC de Costa Rica',
+       '"Julio 2006 = 100"');
+figura(100*np.log(IPC).diff(4),
+       'Tasa de crecimiento interanual del IPC de Costa Rica',
+       'por ciento');
 #3.e
+IPC3 = pd.concat([IPC, IPC.rolling(4).mean()], axis=1)
+IPC3.columns = ['Serie original', 'Serie suavizada']
 
+figura(IPC3,
+    'IPC de Costa Rica tomando el promedio para cada trimestre',
+    'por ciento');
 #3.f
+IPC4 = pd.concat([IPC, IPC.rolling(13).mean()], axis=1)
+IPC4.columns = ['Serie original', 'Serie suavizada']
+
+figura(IPC4,
+    'IPC de Costa Rica tomando el promedio de los 12 meses de cada año',
+    'por ciento');
 
 #4.a
