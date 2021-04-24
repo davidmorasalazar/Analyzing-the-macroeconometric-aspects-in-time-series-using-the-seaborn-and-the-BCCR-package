@@ -74,24 +74,20 @@ figura(IPC.diff(1),
 IPC1 = SW({1043:'IPC (J2006=100) variación mensual'}, FechaInicio=2000)  # pasando un diccionario para renombrar las series
 IPC1.plot(figsize = (12,5));
 
-#3.c.1
+#3.c
 def figura1(datos, datos1, titulo, y):
-    fig1, ax = plt.subplots(figsize=(12,10))
-    fig2, ax1 = plt.subplots(figsize=(12,10))
-    # concatenar = pd.concat([datos, datos1])    
-    # ax = sns.lineplot(data=concatenar)
-    ax = datos.plot(ax=ax, legend=None)
-    ax1 = datos1.plot(ax1=ax1, legend=None)  
+    fig1, ax = plt.subplots(figsize=(12,5))
+    concatenar = pd.concat([datos, datos1])    
+    ax = sns.lineplot(data=concatenar)
     ax.set(title=titulo, xlabel=" ", ylabel=y)    
-    ax1.set(title=titulo, xlabel=" ", ylabel=y)
 
-    return
+    return fig1
 figura1(100*IPC.pct_change(1), 100*np.log(IPC).diff(1)," Tasa de crecimiento y la primera diferencia del logaritmo del IPC", "Julio 2006 = 100")
-
+#3.c.alternativa
 transIPC1 = 100*IPC.pct_change(1)
 translogIPC2 = 100*np.log(IPC).diff(1)
-transIPC1.plot(figsize = (12,5));
-translogIPC2.plot(figsize = (12,5));
+transIPC1.plot(figsize = (12,5), title = "Tasa de crecimiento mensual del IPC");
+translogIPC2.plot(figsize = (12,5), title = "Primera diferencia del logaritmo del IPC");
 #3.d
 
 #3.e
