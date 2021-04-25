@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Apr 21 07:52:01 2021
-
 @author: David Gerardo Mora Salazar
 """
 import seaborn as sns
@@ -12,7 +11,10 @@ import requests
 import io
 import xlrd
 from bccr import SW
+# xlrd.xlsx.ensure_elementtree_imported(False, None)
+# xlrd.xlsx.Element_has_iter = True
 #pip install bccr
+#!pip install xlrd==1.2.0
 #1.a
 # Download data from web page
 urla="https://vincentarelbundock.github.io/Rdatasets/csv/datasets/airquality.csv"
@@ -48,7 +50,7 @@ sns.lineplot(data=b, x="Unnamed: 0", y="value")
 b['Natural logarithm of value'] = np.log(b['value'])
 sns.lineplot(data=b, x="Unnamed: 0", y="Natural logarithm of value")
 #3.a
-wb = xlrd.open_workbook('C:/Users/MiBebe/Downloads/IPC.xlsx')
+wb = xlrd.open_workbook('C:/Users/David Mora Salazar/Documents/ECONOMÍA UNIVERSIDAD DE COSTA RICA/Macroeconometría/Tarea 1/IPC.xlsx')
 sh1 = wb.sheet_by_name(u'Hoja1')
 x = sh1.col_values(0)  # column 0
 y = sh1.col_values(1)  # column 1
@@ -111,3 +113,18 @@ figura(IPC4,
     'por ciento');
 
 #4.a
+euroframe = pd.read_csv('C:/Users/David Mora Salazar/Documents/ECONOMÍA UNIVERSIDAD DE COSTA RICA/Macroeconometría/Tarea 1/euro.csv')  
+def figura3 (datos, titulo, y):
+    fig3, ax = plt.subplots(figsize=(20,5))
+    ax = sns.lineplot(data=datos, x =datos.fecha[5400:5475], y = 100*np.log(datos.euro[5400:5475]).diff(1) )
+    ax.set(title=titulo, xlabel=" ", ylabel=y)    
+    plt.xticks(rotation=90)
+    plt.xticks(datos.fecha[5400:5475][::2])  
+    return fig3
+
+figura3(euroframe,"Tasa de depreciación diaria ", "hola")
+   
+#4.b
+
+#4.c
+
